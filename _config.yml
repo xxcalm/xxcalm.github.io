@@ -11,10 +11,10 @@ url: "https://xxcalms.github.io"
 # 博客是否自动生成目录，false为不生成
 enableToc: true
 
-# Comment
-comment:
+
+# comment:
     # livere: MTAyMC81MDk5NC8yNzQ3Ng  # https://www.livere.com
-    disqus: leopard
+    # disqus: leopard
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
