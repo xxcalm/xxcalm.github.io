@@ -1,7 +1,7 @@
 ---
-layout:post
-title:VSCode插件
-descripyion:修改VS Code插件的默认位置
+layout: post
+title: VSCode插件
+descripyion: 修改VS Code插件的默认位置
 date: 2022-04-01 
 tag: VSCode
 ---
