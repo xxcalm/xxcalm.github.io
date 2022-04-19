@@ -1,14 +1,10 @@
-\---
-
+---
 layout: post
-
 title: Django字段类型
-
+descripyion: Django字段类型和选项
 date: 2022-04-19
-
 tag: Django
-
-\---
+---
 
 **Django创建字段时，需要定义数据类型，其中常用的数据类型如下：**
 
