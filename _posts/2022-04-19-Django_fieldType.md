@@ -26,7 +26,7 @@ tag: Django
 | **DateTimeField**     | 日期字段   | 功能类似DateField，支持同样的参数                            |
 | **TimeField**         | 日期字段   | 参数同DateField                                              |
 | **FileField**         |            | 上传文件字段                                                 |
-| **ImageField **       |            | upload_to='type', whith_fiel= , height_field= 继承于FileField，对上传的内容进行校验，确保是有效的图片（jpg、png） |
+| **ImageField**       |            | upload_to='type', whith_fiel= , height_field= 继承于FileField，对上传的内容进行校验，确保是有效的图片（jpg、png） |
 | **URLField**          | URL字段    | verify_exists=True(默认)                                     |
 | **IntegerField**      | 主键       | 主键，它同AutoField一样，唯一的差别就是不自增                |
 
