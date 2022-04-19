@@ -35,7 +35,7 @@ tag: Django
 | **default**                       | 设置默认值                                                   |
 | **verbose_name**                  | 用于指定字段名称                                             |
 | **primary_key**                   | 若为True，则该字段会成为模型的主键字段，默认值是False，一般作为AutoField的选项使用。 |
-| **choices**choices=字段名_choices | 配置字段的choices后，在admin页面上就可以看到对应的选项展示，choice显示中文可以使用 "get_字段名_display()" |
+| **choices**                       | 配置choices=字段名_choices，在admin页面上就可以看到对应的选项展示，choice显示中文可以使用 "get_字段名_display()" |
 | **unique**                        | 如果为True, 这个字段在表中必须有唯一值，默认值是False        |
 | **db_index**                      | 若值为True, 则在表中会为此字段创建索引，默认值是False        |
 | **db_column**                     | 字段的名称，如果未指定，则使用我们定义的Field对应数据库中的字段名称 |
