@@ -1,0 +1,134 @@
+---
+layout: post
+title: Django分页功能
+descripyion: Django分页功能
+date: 2022-04-24
+tag: Django
+---
+
+# Django分页
+
+**Django**本身提供了一个类Paginator用于分页，但Paginator并不具体管理具体的页的处理，而是使用Page对象管理具体页面。
+
+```py
+from django.core.paginator import Paginator
+```
+
+含有两个对象可以互相调用：page对象  paginator 对象
+
+paginator 对象方法：
+
+```shell
+par_page:            每页显示条目数量
+cout:                数据总个数
+num_pages:      	 总页数
+page_range：   		总页数的索引范围(1,100)
+page：               page对象
+```
+
+page对象方法：
+
+```shell
+has_next               是否有下一页
+next_page_number		下一页页码
+has_previous			是否有上一页
+object_list            分页之后的数据列表
+number                 当number前页
+paginator              paginator对象
+```
+**一般都会自定义一个分页的组件，所以在这里分享一个自己写的组件：**
+
+```python
+"""
+定义的分页组件：
+    # 1.定义请求的数据 queryset
+    # 2.定义一页显示多少条数据 page_size=10
+    # 3.定义显示页码的左右区间 show_page=3
+    # 例子：
+    userinfos = models.UserInfo.objects.all()
+    pagination = Pagination(request, userinfos)
+
+    userinfo = pagination.queryset #分页显示的数据
+    pages = pagination.pages       #页码组件
+
+    return render(request,'user.html',{'userinfo':userinfo,'pages':pages})
+    
+HTML页面展示组件：
+	# css样式基于Bootstrap
+    <ul class="pagination">
+        {{pages}}
+    </ul>
+"""
+
+from django.utils.safestring import mark_safe
+import math
+import copy
+
+class Pagination(object):
+
+    def __init__(self, request, queryset, page_size=10, show_page=3,):
+        
+        get_dict = copy.deepcopy(request.GET)
+        get_dict._mutable = True
+        
+        # 获取url的页码
+        page = int(request.GET.get('page',1))
+        self.page = page
+        # 一页显示的多少条数据
+        self.page_size = page_size
+        self.start=(page-1)*self.page_size
+        self.end=page*self.page_size
+        self.queryset = queryset[self.start:self.end]
+        
+        # 总页码
+        self.page_count=math.ceil(queryset.count()/self.page_size)
+
+        # 首页
+        page_first='<li><a href="?page={}">首页</a></li>'.format(1)
+        # 尾页
+        page_last='<li><a href="?page={}">尾页</a></li>'.format(self.page_count)
+
+        # 上一页
+        if self.page > 1:
+            get_dict.setlist('page',[self.page-1])
+            page_up='<li><a href="?page={}">上一页</a></li>'.format(get_dict.urlencode())
+        else:
+            page_up='<li><a href="?page={}">上一页</a></li>'.format(1)
+        # 下一页
+        if self.page < self.page_count:
+            get_dict.setlist('page',[self.page+1])
+            page_down='<li><a href="?page={}">下一页</a></li>'.format(get_dict.urlencode())
+        else:
+            page_down='<li><a href="?page={}">下一页</a></li>'.format(self.page_count)
+
+        # 显示的页码区间
+        self.show_page = show_page
+        # 显示的页码
+        if self.page_count <= 2*self.show_page+1:
+            start_page = 1
+            end_page = self.page_count
+        else:
+            if self.page <= self.show_page:
+                start_page = 1
+                end_page = 2*self.show_page+1
+            elif self.page+self.show_page <= self.page_count:
+                start_page = page - self.show_page
+                end_page = page + self.show_page
+            else:
+                start_page = self.page_count - 2*self.show_page
+                end_page = self.page_count
+
+        # 生成的页码(HTML)
+        pages=[page_first]
+        pages.append(page_up)
+        for i in range(start_page,end_page+1):
+            get_dict.setlist('page',[i])
+            if i == page:
+                page_li='<li class="active"><a href="?{}">{}</a></li>'.format(get_dict.urlencode(),i)
+            else:
+                page_li='<li><a href="?{}">{}</a></li>'.format(get_dict.urlencode(),i)
+            pages.append(page_li)
+        pages.append(page_down)
+        pages.append(page_last)
+        self.pages=mark_safe("".join(pages))
+```
