@@ -259,11 +259,11 @@ td:last-child {
 }
 .next{
   margin-top: 20px;
-  float:right
+  float:left
 }
 .previous{
   margin-top: 20px;
-  float:left
+  float:right
 }
 .pager li>a{
   width:100%;
