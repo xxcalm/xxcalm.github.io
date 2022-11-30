@@ -1,9 +1,9 @@
 # Basic
-title: XxCalms
+title: xxcalm
 subtitle: 点击头像进入
 # 头像里面的描述
 avatarDesc: 
-url: "https://xxcalms.github.io"
+url: "https://xxcalm.github.io"
 
 # 博客是否自动生成目录，false为不生成
 enableToc: true
@@ -17,7 +17,7 @@ enableToc: true
 # Social
 social:
     # weibo: 
-    github: XxCalms
+    github: xxcalm
     # zhihu: panpanleopard
     # juejin: xxx
     # jianshu: 
